@@ -1,36 +1,69 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>بورتفوليو — طه سعد</title>
+  <title>Taha Saad — Portfolio</title>
   <style>
     :root {
       --main-color: #3aa6ff;
       --bg-color: #f8fbff;
       --text-color: #222;
       --card-bg: #fff;
-      --shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      --transition: all 0.4s ease;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
-      font-family: "Cairo", sans-serif;
+      font-family: "Poppins", sans-serif;
       background-color: var(--bg-color);
       margin: 0;
       color: var(--text-color);
       line-height: 1.6;
       scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 15px 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    nav a:hover {
+      color: var(--main-color);
     }
 
     header {
       text-align: center;
-      padding: 100px 20px 60px;
+      padding: 140px 20px 80px;
       background: linear-gradient(135deg, var(--main-color), #0078d7);
       color: white;
+      animation: fadeIn 1s ease-out;
     }
 
     header h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       margin-bottom: 10px;
     }
 
@@ -39,10 +72,36 @@
       opacity: 0.9;
     }
 
+    .btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: white;
+      color: var(--main-color);
+      padding: 10px 20px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: var(--transition);
+    }
+
+    .btn:hover {
+      background: var(--main-color);
+      color: white;
+      transform: scale(1.05);
+    }
+
     section {
-      padding: 60px 20px;
+      padding: 80px 20px;
       max-width: 1000px;
       margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     h2 {
@@ -50,6 +109,19 @@
       color: var(--main-color);
       margin-bottom: 40px;
       font-size: 2rem;
+      position: relative;
+    }
+
+    h2::after {
+      content: "";
+      position: absolute;
+      width: 60px;
+      height: 4px;
+      background: var(--main-color);
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -10px;
+      border-radius: 2px;
     }
 
     .projects {
@@ -63,11 +135,29 @@
       border-radius: 15px;
       box-shadow: var(--shadow);
       padding: 20px;
-      transition: transform 0.3s ease;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: rgba(58, 166, 255, 0.05);
+      transform: rotate(45deg);
+      transition: var(--transition);
+    }
+
+    .project-card:hover::before {
+      background: rgba(58, 166, 255, 0.1);
     }
 
     .project-card:hover {
-      transform: translateY(-8px);
+      transform: translateY(-8px) scale(1.02);
     }
 
     .project-card h3 {
@@ -88,7 +178,7 @@
       padding: 8px 14px;
       border-radius: 8px;
       font-size: 0.9rem;
-      transition: background 0.3s;
+      transition: var(--transition);
     }
 
     .project-card a:hover {
@@ -105,10 +195,12 @@
       text-decoration: none;
       font-weight: bold;
       font-size: 1.1rem;
+      transition: var(--transition);
     }
 
     .contact a:hover {
       text-decoration: underline;
+      color: #0078d7;
     }
 
     footer {
@@ -117,6 +209,11 @@
       background-color: #e9f4ff;
       color: #555;
       font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @media (max-width: 600px) {
@@ -128,47 +225,70 @@
 </head>
 <body>
 
+  <!-- Navbar -->
+  <nav>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
   <!-- Hero -->
   <header>
-    <h1>👋 أهلاً، أنا طه سعد</h1>
-    <p>مطور تطبيقات Flutter و Android | شغوف بابتكار حلول رقمية ذكية</p>
+    <h1>👋 Hello, I’m Taha Saad</h1>
+    <p>Flutter & Android Developer | Passionate about building smart digital solutions</p>
+    <a href="cv.pdf" class="btn" download>⬇️ Download CV</a>
   </header>
 
   <!-- Projects -->
   <section id="projects">
-    <h2>📱 مشاريعي</h2>
+    <h2>📱 My Projects</h2>
     <div class="projects">
       <div class="project-card">
         <h3>Code Blue</h3>
-        <p>تطبيق تمريضي شامل لتدريب الممرضين على خطوات دعم الحياة الأساسية (BLS) والتعامل مع حالات الطوارئ الطبية.</p>
-        <a href="https://play.google.com/store/apps/details?id=code.blue" target="_blank">عرض التطبيق</a>
+        <p>A comprehensive nursing app designed to train nurses on Basic Life Support (BLS) steps and emergency medical cases.</p>
+        <a href="https://play.google.com/store/apps/details?id=com.tahasaad.codeblue" target="_blank">View App</a>
       </div>
       <div class="project-card">
         <h3>My Salary Pro</h3>
-        <p>تطبيق احترافي لحساب الراتب والأوفر تايم تلقائياً، مناسب للموظفين في القطاع الصحي وغيره.</p>
-        <a href="https://play.google.com/store/apps/details?id=my.salary.pro" target="_blank">عرض التطبيق</a>
+        <p>A professional salary & overtime calculator app — ideal for healthcare professionals and employees.</p>
+        <a href="https://play.google.com/store/apps/details?id=com.tahasaad.mysalarypro" target="_blank">View App</a>
       </div>
     </div>
   </section>
 
   <!-- About -->
   <section class="about" id="about">
-    <h2>💡 نبذة عني</h2>
-    <p>أنا مطور تطبيقات موبايل بخبرة في Flutter و Firebase، أعمل على تحويل الأفكار إلى تطبيقات واقعية وسهلة الاستخدام.  
-       أهدف دائماً إلى بناء تطبيقات ذات تصميم عصري وتجربة مستخدم مميزة.</p>
+    <h2>💡 About Me</h2>
+    <p>I’m a mobile app developer experienced in Flutter and Firebase.  
+       I love transforming ideas into real, user-friendly apps with modern designs and smooth user experiences.</p>
   </section>
 
   <!-- Contact -->
   <section class="contact" id="contact">
-    <h2>📬 تواصل معي</h2>
-    <a href="mailto:tahasaad.dev@gmail.com">📧 بريد إلكتروني</a>
-    <a href="https://github.com/taha">💻 GitHub</a>
-    <a href="https://linkedin.com/in/taha-saad">🔗 LinkedIn</a>
+    <h2>📬 Contact Me</h2>
+    <a href="mailto:tahasaad567@gmail.com">📧 Email</a>
+    <a href="https://github.com/taha" target="_blank">💻 GitHub</a>
+    <a href="https://linkedin.com/in/taha-saad" target="_blank">🔗 LinkedIn</a>
   </section>
 
   <footer>
-    © 2025 طه سعد — جميع الحقوق محفوظة
+    © 2025 Taha Saad — All rights reserved
   </footer>
 
+  <!-- Scroll Animation -->
+  <script>
+    const sections = document.querySelectorAll("section");
+
+    const revealSection = () => {
+      const trigger = window.innerHeight * 0.85;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if (top < trigger) sec.classList.add("visible");
+      });
+    };
+
+    window.addEventListener("scroll", revealSection);
+    revealSection();
+  </script>
 </body>
 </html>
